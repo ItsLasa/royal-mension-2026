@@ -7,15 +7,9 @@ import Icon from "@/components/Icon";
 
 import Link from "next/link";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { images } from "@/lib/images";
 import Image from "next/image";
 import bg from '@/app/assets/about-bg.jpg'
-import room from '@/app/assets/room.jpg'
-import view from '@/app/assets/view.avif'
-import honeymoon from '@/app/assets/honeymoon.jpeg'
-import villaFamily from '@/app/assets/villa-family.jpg'
-import groupLuxury from '@/app/assets/Group Luxury.jpg'
-import mountain from '@/app/assets/mountain.avif'
-import six from '@/app/assets/6.jpg'
 
 function SectionReveal({
   children,
@@ -44,12 +38,11 @@ export default function AboutPage() {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-primary/20 z-10" />
           <Image
-            className="object-cover scale-105 animate-pulse-slow"
+            className="w-full h-full object-cover scale-105 animate-pulse-slow"
             src={bg}
+            width={100}
+            height={100}
             alt="Luxury villa in Sri Lanka mountains"
-            fill
-            sizes="100vw"
-            priority
           />
         </div>
         <div className="relative z-20 text-center text-on-primary px-margin-mobile md:px-margin-desktop">
@@ -102,15 +95,11 @@ export default function AboutPage() {
           </SectionReveal>
           <SectionReveal className="md:col-span-6 md:col-start-7" delay={150}>
             <div className="relative group">
-              <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg shadow-sm">
-                <Image
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                  src={room}
-                  alt="Hand-woven linen interior"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
+              <img
+                className="w-full aspect-[4/5] object-cover rounded-lg shadow-sm group-hover:scale-[1.02] transition-transform duration-700"
+                src={images.luxuryInterior}
+                alt="Hand-woven linen interior"
+              />
               <div className="absolute -bottom-10 -left-10 hidden md:block w-64 h-80 bg-primary-container p-8 text-on-primary">
                 <Icon name="nature" className="text-tertiary-fixed text-4xl mb-4" />
                 <h4 className="font-headline-sm text-headline-sm mb-4">
@@ -166,15 +155,11 @@ export default function AboutPage() {
               </div>
             </SectionReveal>
             <SectionReveal className="md:w-1/2" delay={150}>
-              <div className="relative w-full aspect-video md:aspect-square overflow-hidden rounded-xl">
-                <Image
-                  className="object-cover grayscale transition-all duration-1000 hover:grayscale-0"
-                  src={view}
-                  alt="Panoramic mountain view"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
+              <img
+                className="w-full aspect-video md:aspect-square object-cover rounded-xl grayscale hover:grayscale-0 transition-all duration-1000"
+                src={images.mountainValley}
+                alt="Panoramic mountain view"
+              />
             </SectionReveal>
           </div>
         </div>
@@ -247,22 +232,20 @@ export default function AboutPage() {
         <SectionReveal>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-[1440px] mx-auto">
             {[
-              { img: honeymoon, title: "Honeymooners", desc: "Intimate escapes with candlelit dinners and floral spa rituals." },
-              { img: villaFamily, title: "Families", desc: "Spacious suites and engaging outdoor adventures for all ages." },
-              { img: groupLuxury, title: "Private Groups", desc: "Full villa buyouts for exclusive gatherings and celebrations." },
-              { img: mountain, title: "Nature Escapes", desc: "For the soul seeking reconnection through hiking and bird watching." },
+              { img: images.natureScenic, title: "Honeymooners", desc: "Intimate escapes with candlelit dinners and floral spa rituals." },
+              { img: images.luxuryInterior, title: "Families", desc: "Spacious suites and engaging outdoor adventures for all ages." },
+              { img: images.heroMountain, title: "Private Groups", desc: "Full villa buyouts for exclusive gatherings and celebrations." },
+              { img: images.mountainValley, title: "Nature Escapes", desc: "For the soul seeking reconnection through hiking and bird watching." },
             ].map((item, i) => (
               <div
                 key={item.title}
                 className="relative group overflow-hidden rounded-xl h-[450px]"
                 data-reveal-delay={i * 100}
               >
-                <Image
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                <img
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   src={item.img}
                   alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent p-8 flex flex-col justify-end">
                   <h3 className="font-headline-sm text-on-primary mb-2">
@@ -318,13 +301,11 @@ export default function AboutPage() {
               <Icon name="map" />
             </Link>
           </SectionReveal>
-          <SectionReveal delay={150} className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
-            <Image
-              className="object-cover"
-              src={six}
+          <SectionReveal delay={150} className="h-[500px] rounded-2xl overflow-hidden shadow-xl">
+            <img
+              className="w-full h-full object-cover"
+              src={images.villaAerial}
               alt="Pussallawa, Sri Lanka"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </SectionReveal>
         </div>

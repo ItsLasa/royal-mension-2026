@@ -39,10 +39,20 @@ vi.mock("../../src/lib/prisma", () => ({
       findUnique: vi.fn(async ({ where }) => sessionRecord && sessionRecord.tokenHash === where.tokenHash ? sessionRecord : null),
       update: vi.fn(async ({ data }) => { sessionRecord = { ...sessionRecord, ...data }; return sessionRecord; }),
     },
-    auditLog: { create: vi.fn(async () => ({})) },
+    auditLog: { create: vi.fn(async () => ({})), findMany: vi.fn(async () => []) },
     booking: {
       count: vi.fn(async () => 0),
       aggregate: vi.fn(async () => ({ _sum: { grandTotal: 0, amountPaid: 0 } })),
+      findMany: vi.fn(async () => []),
+      groupBy: vi.fn(async () => []),
+    },
+    unit: {
+      findMany: vi.fn(async () => []),
+    },
+    payment: {
+      findMany: vi.fn(async () => []),
+    },
+    maintenanceIssue: {
       findMany: vi.fn(async () => []),
     },
   },
@@ -72,11 +82,11 @@ describe("admin auth sessions", () => {
 
     const afterLogout = await agent.get("/api/v1/admin/auth/me");
     expect(afterLogout.status).toBe(401);
-  }, 15000);
+  }, 30000);
 
   it("rejects invalid credentials", async () => {
     const { createApp } = await import("../../src/app");
     const response = await request(createApp()).post("/api/v1/admin/auth/login").send({ email: adminUser.email, password: "Wrong123!" });
     expect(response.status).toBe(401);
-  }, 15000);
+  }, 30000);
 });

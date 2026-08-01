@@ -1,0 +1,17 @@
+Error: P3006
+
+Migration `20260801000000_owner_console_pms` failed to apply cleanly to the shadow database. 
+Error code: P3018
+Error:
+A migration failed to apply. New migrations cannot be applied before the error is recovered from. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
+
+Migration name: 20260801000000_owner_console_pms
+
+Database error code: 1065
+
+Database error:
+Query was empty
+
+Please check the query number 1 from the migration file.
+
+
