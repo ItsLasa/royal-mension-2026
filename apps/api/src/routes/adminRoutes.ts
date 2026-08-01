@@ -1,14 +1,38 @@
 import { Router } from "express";
 import { prisma } from "../lib/prisma";
 import { ok } from "../lib/apiResponse";
+import { asyncHandler } from "../lib/asyncHandler";
 import { requireAdmin } from "../middleware/auth";
+import { createAvailabilityBlock, getAdminCalendarSummary, getBookingStatusReport, getDashboardSummary, listAdminBookings, listAdminPackages, listAdminPayments } from "../services/adminService";
 
 export const adminRoutes = Router();
 adminRoutes.use(requireAdmin);
-adminRoutes.get("/admin/dashboard", async (_req, res, next) => { try { const [bookings, revenue, arrivals] = await Promise.all([prisma.booking.count(), prisma.booking.aggregate({ _sum: { grandTotal: true, amountPaid: true } }), prisma.booking.findMany({ take: 8, orderBy: { checkInDate: "asc" }, include: { guest: true, package: true } })]); res.json(ok({ bookings, revenue: revenue._sum, arrivals })); } catch (e) { next(e); } });
-adminRoutes.get("/admin/bookings", async (_req, res, next) => { try { res.json(ok(await prisma.booking.findMany({ take: 50, orderBy: { createdAt: "desc" }, include: { guest: true, package: true, payments: true } }))); } catch (e) { next(e); } });
-adminRoutes.get("/admin/packages", async (_req, res, next) => { try { res.json(ok(await prisma.package.findMany({ include: { unit: true, images: true } }))); } catch (e) { next(e); } });
-adminRoutes.get("/admin/calendar", async (_req, res, next) => { try { const [bookings, blocks] = await Promise.all([prisma.booking.findMany({ where: { bookingStatus: { in: ["HOLD", "PENDING_PAYMENT", "CONFIRMED"] } }, include: { package: true } }), prisma.availabilityBlock.findMany()]); res.json(ok({ bookings, blocks })); } catch (e) { next(e); } });
-adminRoutes.post("/admin/availability-blocks", async (req, res, next) => { try { res.status(201).json(ok(await prisma.availabilityBlock.create({ data: req.body }))); } catch (e) { next(e); } });
-adminRoutes.get("/admin/payments", async (_req, res, next) => { try { res.json(ok(await prisma.payment.findMany({ take: 50, orderBy: { createdAt: "desc" }, include: { booking: true, events: true } }))); } catch (e) { next(e); } });
-adminRoutes.get("/admin/reports", async (_req, res, next) => { try { const byStatus = await prisma.booking.groupBy({ by: ["bookingStatus"], _count: true, _sum: { grandTotal: true } }); res.json(ok({ byStatus })); } catch (e) { next(e); } });
+
+adminRoutes.get("/admin/dashboard", asyncHandler(async (_req, res) => {
+  res.json(ok(await getDashboardSummary(prisma)));
+}));
+
+adminRoutes.get("/admin/bookings", asyncHandler(async (_req, res) => {
+  res.json(ok(await listAdminBookings(prisma)));
+}));
+
+adminRoutes.get("/admin/packages", asyncHandler(async (_req, res) => {
+  res.json(ok(await listAdminPackages(prisma)));
+}));
+
+adminRoutes.get("/admin/calendar", asyncHandler(async (_req, res) => {
+  res.json(ok(await getAdminCalendarSummary(prisma)));
+}));
+
+adminRoutes.post("/admin/availability-blocks", asyncHandler(async (req, res) => {
+  const block = await createAvailabilityBlock(prisma, req.body);
+  res.status(201).json(ok(block));
+}));
+
+adminRoutes.get("/admin/payments", asyncHandler(async (_req, res) => {
+  res.json(ok(await listAdminPayments(prisma)));
+}));
+
+adminRoutes.get("/admin/reports", asyncHandler(async (_req, res) => {
+  res.json(ok(await getBookingStatusReport(prisma)));
+}));

@@ -12,13 +12,18 @@ export const images = {
 
   // Architecture & Interiors
   luxuryInterior: "../assets/tv.avif",
-  hotelRoom: "../assets/hotel-room.jpg",
+
 
   // Pool & Resort
   poolResort: "../assets/pool-resort.jpg",
 
   // Food
   foodPlatter: "../assets/food-platter.jpg",
+
+  //honeymoon
+  hotelRoom: "@app/assets/honeymoon.jpeg",
+
+
 } as const;
 
 export type ImageKey = keyof typeof images;

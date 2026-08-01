@@ -2,9 +2,10 @@
 
 import Header from "@/components/Header";
 import Icon from "@/components/Icon";
-import { images } from "@/lib/images";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import Image from "next/image";
+import bg from "@/app/assets/about-bg.jpg";
 
 function SectionReveal({
   children,
@@ -31,20 +32,24 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="relative h-[614px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div
-            className="w-full h-full bg-cover bg-center brightness-75"
-            style={{ backgroundImage: `url('${images.heroMountain}')` }}
+          <Image
+            className="object-cover"
+            src={bg}
+            alt="Luxury villa surrounded by Sri Lankan mountain scenery"
+            fill
+            sizes="100vw"
+            priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/40 to-surface/100" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/30 to-primary/70" />
         </div>
         <div className="relative z-10 text-center px-margin-mobile md:px-margin-desktop">
-          <span className="font-label-lg text-label-lg text-ivory/80 uppercase tracking-[0.3em] mb-4 block">
+          <span className="font-label-lg text-label-lg text-ivory uppercase tracking-[0.3em] mb-4 block drop-shadow">
             Concierge & Assistance
           </span>
-          <h1 className="font-display-lg text-display-lg text-white mb-6">
+          <h1 className="font-display-lg text-display-lg text-white mb-6 drop-shadow-lg">
             Welcome to Royal Mansion Resort
           </h1>
-          <p className="font-body-lg text-body-lg text-white/90 max-w-2xl mx-auto italic">
+          <p className="font-body-lg text-body-lg text-white max-w-2xl mx-auto italic drop-shadow">
             How may we assist you in planning your sanctuary retreat?
           </p>
         </div>
@@ -155,19 +160,43 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="h-[500px] w-full relative">
-        <div className="w-full h-full bg-mist">
-          <div className="w-full h-full flex items-center justify-center bg-mist overflow-hidden">
-            <img className="w-full h-full object-cover" src={images.villaAerial} alt="Map of Pussallawa, Sri Lanka" />
-          </div>
-        </div>
-        <div className="absolute bottom-12 left-margin-desktop bg-white p-8 luxury-shadow rounded-lg hidden md:block max-w-xs border border-mist">
+      <section className="h-[520px] w-full relative overflow-hidden">
+        {/* Interactive Google Map embed (no API key required) */}
+        <iframe
+          title="Map of Royal Mansion Resort Villa, Pussallawa, Sri Lanka"
+          src="https://maps.google.com/maps?q=7.10533,80.63667&z=15&hl=en&output=embed"
+          className="w-full h-full border-0 grayscale-[20%] hover:grayscale-0 transition-all duration-700"
+          loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+        {/* Soft gradient to blend the map into the page */}
+        <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-surface to-transparent pointer-events-none" />
+        {/* Info card */}
+        <div className="absolute bottom-6 md:bottom-12 left-4 md:left-margin-desktop right-4 md:right-auto bg-white p-7 md:p-8 luxury-shadow rounded-lg md:max-w-sm border border-mist">
           <h5 className="font-headline-sm text-headline-sm text-primary mb-2">The Sanctuary</h5>
-          <p className="text-on-surface-variant mb-4">Pussallawa is the gateway to Nuwara Eliya.</p>
-          <a className="flex items-center gap-2 text-primary font-label-lg text-label-lg uppercase tracking-wider group" href="#">
-            Get Directions
-            <Icon name="arrow_forward" className="group-hover:translate-x-1 transition-transform" />
-          </a>
+          <p className="text-on-surface-variant mb-1">No 142, Nuwara Eliya Road,</p>
+          <p className="text-on-surface-variant mb-4">Pussallawa, Sri Lanka · Gateway to Nuwara Eliya.</p>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              className="flex items-center justify-center gap-2 bg-primary text-on-primary py-3 px-6 rounded-full font-label-lg text-label-lg uppercase tracking-wider hover:bg-primary-container transition-all duration-500 group"
+              href="https://www.google.com/maps/dir/?api=1&destination=7.10533,80.63667"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get Directions
+              <Icon name="arrow_forward" className="group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              className="flex items-center justify-center gap-2 text-primary font-label-lg text-label-lg uppercase tracking-wider hover:text-tertiary transition-colors group"
+              href="https://www.google.com/maps/search/?api=1&query=7.10533,80.63667"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="map" />
+              View Larger Map
+            </a>
+          </div>
         </div>
       </section>
 

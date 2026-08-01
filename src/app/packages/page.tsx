@@ -4,9 +4,24 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Icon from "@/components/Icon";
-import { images } from "@/lib/images";
+
 import Link from "next/link";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+
+import honeymoon from '@/app/assets/honeymoon.jpeg'
+import honeymoon2 from '@/app/assets/honeymoon-.jpeg'
+import packgaes from '@/app/assets/packages-bg.jpg'   
+import double from '@/app/assets/honeymoon-2.jpeg'   
+import group from '@/app/assets/Group Luxury.jpg'   
+import family from '@/app/assets/villa-family.jpg'   
+import Image from "next/image";
+
+const images = {
+
+packgaes,
+
+
+} as const;
 
 function SectionReveal({
   children,
@@ -34,8 +49,8 @@ export default function PackagesPage() {
       <header className="relative h-[614px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-primary/30 z-10" />
         <div
-          className="absolute inset-0 w-full h-full"
-          style={{ backgroundImage: `url('${images.heroMountain}')` }}
+          className="absolute inset-0 w-full h-full bg-cover"
+          style={{ backgroundImage: `url('${images.packgaes.src}')` }}
         />
         <div className="relative z-20 text-center px-4 max-w-4xl">
           <h1 className="font-display-lg text-display-lg text-white mb-6">
@@ -55,9 +70,11 @@ export default function PackagesPage() {
           <SectionReveal className="md:col-span-8">
             <div className="group relative bg-white rounded-xl overflow-hidden border border-mist hover:shadow-xl transition-all duration-500">
               <div className="h-96 md:h-[500px] overflow-hidden">
-                <img
+                <Image
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  src={images.hotelRoom}
+                  src={honeymoon}
+                  width={100}
+                  height={100}
                   alt="Honeymoon Suite"
                 />
               </div>
@@ -98,9 +115,11 @@ export default function PackagesPage() {
           <SectionReveal className="md:col-span-4" delay={100}>
             <div className="group relative bg-white rounded-xl overflow-hidden border border-mist hover:shadow-xl transition-all duration-500">
               <div className="h-64 md:h-80 overflow-hidden">
-                <img
+                <Image
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  src={images.hotelRoom}
+                  src={honeymoon2}
+                  height={100}
+                  width={100}
                   alt="Double Room Honeymoon"
                 />
               </div>
@@ -130,9 +149,11 @@ export default function PackagesPage() {
           <SectionReveal className="md:col-span-4" delay={200}>
             <div className="group relative bg-white rounded-xl overflow-hidden border border-mist hover:shadow-xl transition-all duration-500">
               <div className="h-64 md:h-80 overflow-hidden">
-                <img
+                <Image
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  src={images.villaAerial}
+                  src={family}
+                  width={100}
+                  height={100}
                   alt="4BR Villa + Family Suite"
                 />
               </div>
@@ -162,9 +183,11 @@ export default function PackagesPage() {
           <SectionReveal className="md:col-span-4" delay={100}>
             <div className="group relative bg-white rounded-xl overflow-hidden border border-mist hover:shadow-xl transition-all duration-500">
               <div className="h-64 md:h-80 overflow-hidden">
-                <img
+                <Image
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  src={images.villaAerial}
+                  src={group}
+                  width={100}
+                  height={100}
                   alt="4BR Villa"
                 />
               </div>
@@ -194,9 +217,11 @@ export default function PackagesPage() {
           <SectionReveal className="md:col-span-4" delay={200}>
             <div className="group relative bg-white rounded-xl overflow-hidden border border-mist hover:shadow-xl transition-all duration-500">
               <div className="h-64 md:h-80 overflow-hidden">
-                <img
+                <Image
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  src={images.hotelRoom}
+                  src={double}
+                  width={100}
+                  height={100}
                   alt="Standard Double Room"
                 />
               </div>
@@ -254,9 +279,9 @@ export default function PackagesPage() {
                 ].map((row, i) => (
                   <tr
                     key={row.plan}
-                    className={`${i % 2 === 0 ? "bg-white" : "bg-ivory/30"} border-b border-mist hover:bg-ivory transition-colors`}
+                    className={`${i % 2 === 0 ? "bg-white" : "bg-ivory/30"} border-b font-normal border-mist hover:bg-ivory transition-colors`}
                   >
-                    <td className="p-6 font-bold text-primary">{row.plan}</td>
+                    <td className="p-6 font-normal text-primary">{row.plan}</td>
                     <td className="p-6">{row.meals}</td>
                     <td className="p-6">{row.style}</td>
                     <td className="p-6 text-right">{row.level}</td>
