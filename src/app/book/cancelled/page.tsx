@@ -1,0 +1,3 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+export default function CancelledPage() { return <><Header /><main className="min-h-screen bg-ivory px-margin-mobile pb-20 pt-36 md:px-margin-desktop"><div className="mx-auto max-w-3xl bg-white p-8"><p className="font-label-lg text-label-lg uppercase tracking-widest text-tertiary">Payment Cancelled</p><h1 className="mt-3 font-headline-lg text-headline-lg-mobile text-primary md:text-headline-lg">No browser redirect can cancel or confirm a booking.</h1><p className="mt-4 text-on-surface-variant">Please check your booking status or contact the villa team. The server remains the authority for payment state.</p></div></main><Footer /></>; }
